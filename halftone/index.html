@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>
+      Halftone Lab
+    </title>
+    <meta name="description" content="An interactive DPI and LPI printing studio.">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232447ed'/%3E%3Ccircle cx='10' cy='10' r='4' fill='white'/%3E%3Ccircle cx='22' cy='10' r='3' fill='white'/%3E%3Ccircle cx='10' cy='22' r='3' fill='white'/%3E%3Ccircle cx='22' cy='22' r='2' fill='white'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="lab.css">
+    <link rel="stylesheet" href="../assets/brand.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="site-brand" href="../printlab/" aria-label="Printing Lab home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+        <span class="brand-name">PRINTING LAB</span><span class="brand-slash">/</span><span class="brand-section">Halftone</span>
+      </a>
+      <nav class="site-nav" aria-label="Printing Lab sites">
+        <a href="../printlab/">Hub</a><a href="./" aria-current="page">Halftone</a><a href="../folding/">Folding</a>
+      </nav>
+    </header>
+    <main>
+      <div class="intro">
+        <div>
+          <h1>
+            Small dots. Big difference.
+          </h1>
+          <p>
+            Move a slider. See how printer dots build a halftone.
+          </p>
+        </div>
+        <span class="chapter">01 <small>THE HALFTONE LAB</small></span>
+      </div>
+      <nav class="lab-tabs" role="tablist" aria-label="Learning modes">
+        <button role="tab" aria-selected="true" id="tab-explore" aria-controls="explore" data-tab="explore">
+          Explore
+        </button>
+        <button role="tab" aria-selected="false" tabindex="-1" id="tab-compare" aria-controls="compare" data-tab="compare">
+          Compare settings
+        </button>
+        <button role="tab" aria-selected="false" tabindex="-1" id="tab-images" aria-controls="images" data-tab="images">
+          Your image
+          <small>
+            COMING LATER
+          </small>
+        </button>
+      </nav>
+      <section id="explore" role="tabpanel" aria-labelledby="tab-explore">
+        <div class="studio">
+          <article class="visual">
+            <div class="panel-head">
+              <h2>
+                The halftone, up close
+              </h2>
+              <span>
+                LIVE PREVIEW
+              </span>
+            </div>
+            <canvas id="canvas-main" width="720" height="720" aria-label="Magnified halftone pattern">
+            </canvas>
+            <div class="legend">
+              <span>
+                <i>
+                </i>
+                Screen cell boundary
+              </span>
+              <span>
+                <i class="gray">
+                </i>
+                Printer dot boundary
+              </span>
+            </div>
+            <p class="scale">
+              A 0.1 × 0.1 inch print area, magnified to fit your screen.
+            </p>
+          </article>
+          <aside class="controls" id="controls-main">
+          </aside>
+        </div>
+        <div class="insight">
+          <div>
+            <h3>
+              Try this
+            </h3>
+            <p>
+              Keep LPI at 60 and move DPI from 300 to 1200. The screen cells stay the same size, but the printer has more dot positions to make each halftone dot look smoother.
+            </p>
+          </div>
+          <button id="experiment">
+            Set up experiment
+          </button>
+        </div>
+      </section>
+      <section id="compare" role="tabpanel" aria-labelledby="tab-compare" hidden>
+        <div class="compare-heading">
+          <div>
+            <h2>
+              Two settings. One print size.
+            </h2>
+            <p>
+              Change each side independently. Both squares show the same 0.1-inch area.
+            </p>
+          </div>
+          <button id="copy">
+            Copy A to B
+          </button>
+        </div>
+        <div class="comparison">
+          <article class="compare-card">
+            <h2>
+              <b class="badge">
+                A
+              </b>
+              Setting A
+            </h2>
+            <canvas id="canvas-a" width="720" height="720" aria-label="Halftone setting A">
+            </canvas>
+            <div class="controls compact" id="controls-a">
+            </div>
+          </article>
+          <article class="compare-card">
+            <h2>
+              <b class="badge pink">
+                B
+              </b>
+              Setting B
+            </h2>
+            <canvas id="canvas-b" width="720" height="720" aria-label="Halftone setting B">
+            </canvas>
+            <div class="controls compact" id="controls-b">
+            </div>
+          </article>
+        </div>
+        <div class="compare-guide">
+          <div class="legend">
+            <span><i></i>Screen cell boundary</span>
+            <span><i class="gray"></i>Printer dot boundary</span>
+          </div>
+          <p class="scale">A 0.1 × 0.1 inch print area, magnified to fit your screen.</p>
+        </div>
+      </section>
+      <section id="images" role="tabpanel" aria-labelledby="tab-images" hidden>
+        <div class="future">
+          <span>
+            ▧
+          </span>
+          <p class="eyebrow">
+            NEXT CHAPTER
+          </p>
+          <h2>
+            Your picture, in print.
+          </h2>
+          <p>
+            Coming later: upload a picture, compare it with the original, and try two halftone settings side by side.
+          </p>
+          <p class="tag">
+            Planned · uploads are not available yet
+          </p>
+        </div>
+      </section>
+      <section class="learning">
+        <h2>
+          Two settings that shape a halftone.
+        </h2>
+        <div class="definitions">
+          <article>
+            <b>
+              01 / DPI
+            </b>
+            <h3>
+              How finely the printer can place dots
+            </h3>
+            <p>
+              DPI means dots per inch. It shows how many tiny dot positions the printer can use in one inch. A higher DPI can make the edges of a halftone dot look smoother.
+            </p>
+          </article>
+          <article>
+            <b>
+              02 / LPI
+            </b>
+            <h3>
+              How many halftone cells fit in one inch
+            </h3>
+            <p>
+              LPI means lines per inch. It shows how many rows of halftone cells fit in one inch. A higher LPI creates more, smaller cells, so the screen pattern looks finer.
+            </p>
+          </article>
+        </div>
+        <div class="theory">
+          <div>
+            <h3>
+              Inside one screen cell
+            </h3>
+            <p>
+              DPI ÷ LPI gives the printer positions along a cell edge. For a simple square cell with an integer ratio, (DPI ÷ LPI)² + 1 gives the theoretical tone levels, including white and solid black.
+            </p>
+          </div>
+          <div class="formula">
+            600 DPI ÷ 60 LPI = 10
+            <br>
+            <strong>
+              10 × 10 = 100 positions
+            </strong>
+            <br>
+            100 + 1 = 101 possible tones
+          </div>
+        </div>
+      </section>
+      <footer class="site-footer"><strong>PRINTING LAB / HALFTONE</strong><span>A space to experiment, one dot at a time.</span><span>Printing made visible by Damla I. Dogdu of HdM</span></footer>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>

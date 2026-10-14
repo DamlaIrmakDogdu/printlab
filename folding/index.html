@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f3f7fb">
+    <meta name="description" content="An interactive buckle-folding machine lab for post-press education.">
+    <title>Folding Lab · Printing Lab</title>
+    <link rel="stylesheet" href="lab.css">
+    <link rel="stylesheet" href="../assets/brand.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="site-brand" href="../printlab/" aria-label="Printing Lab home">
+        <span class="brand-mark" aria-hidden="true">
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        </span>
+        <span class="brand-name">PRINTING LAB</span>
+        <span class="brand-slash">/</span>
+        <span class="brand-section">Folding</span>
+      </a>
+      <nav class="site-nav" aria-label="Printing Lab sites">
+        <a href="../printlab/">Hub</a>
+        <a href="../halftone/">Halftone</a>
+        <a href="./" aria-current="page">Folding</a>
+      </nav>
+    </header>
+
+    <main>
+      <div class="intro">
+        <div>
+          <h1>A fold,&nbsp;<em>from the inside.</em></h1>
+          <p>Follow the paper. Meet the stop. Watch the buckle become a fold.</p>
+        </div>
+        <span class="chapter">02 <small>THE FOLDING LAB</small></span>
+      </div>
+
+      <div class="workspace">
+        <section class="machine card">
+          <div class="cardhead">
+            <div><span class="eyebrow">THE MACHINE</span><h2>Four plates. One paper journey.</h2></div>
+            <span id="status" class="badge">READY</span>
+          </div>
+
+          <div class="viewtools">
+            <div class="segmented">
+              <button id="wide" class="selected">Whole machine</button>
+              <button id="focus">Follow the fold</button>
+            </div>
+            <label class="check"><input id="labels" type="checkbox" checked> Labels</label>
+          </div>
+
+          <div class="stage">
+            <svg id="machine" viewBox="0 0 1000 680" role="img" aria-label="Animated lecture-style side view of a four-plate buckle folding machine">
+              <defs>
+                <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse">
+                  <circle cx="1" cy="1" r=".8" fill="#d9e2ed"></circle>
+                </pattern>
+                <linearGradient id="metal"><stop stop-color="#fff"></stop><stop offset="1" stop-color="#e5ecf3"></stop></linearGradient>
+              </defs>
+              <rect x="-200" y="-200" width="1500" height="1200" fill="url(#grid)"></rect>
+              <g id="hardware"></g><g id="paper"></g><g id="annotations"></g>
+            </svg>
+            <span class="schematic">SIDE VIEW · TEACHING SCHEMATIC</span>
+          </div>
+
+          <div class="legend">
+            <span><i style="background:#2d86ca"></i>Paper</span>
+            <span><i style="background:#b5a5c4"></i>Folding plate</span>
+            <span><i style="background:#eeae52"></i>Stop</span>
+            <span><i style="background:#9aaabd"></i>Roller</span>
+          </div>
+
+          <div class="story">
+            <span id="phaseNumber">01</span>
+            <div><h3 id="phaseTitle">Feed the sheet</h3><p id="explanation">Choose a fold to start.</p></div>
+          </div>
+
+          <div class="playback">
+            <button id="play" class="primary">▶ Play</button>
+            <button id="restart" title="Restart animation">↺ Restart</button>
+            <button id="step" title="Advance one phase">Next step →</button>
+            <label>Speed <select id="speed"><option value=".35">0.35×</option><option value=".65">0.65×</option><option value="1" selected>1×</option><option value="1.5">1.5×</option><option value="2">2×</option></select></label>
+          </div>
+          <div class="timeline">
+            <input id="timeline" type="range" min="0" max="1000" value="0" aria-label="Animation progress">
+            <output id="time">0:00</output>
+          </div>
+          <div id="journey" class="journey"></div>
+        </section>
+
+        <aside class="card setup">
+          <div class="cardhead">
+            <div><span class="eyebrow">YOUR FOLD</span><h2>Choose &amp; explore</h2></div>
+            <span class="small-icon">↓</span>
+          </div>
+          <div class="pad">
+            <label class="field" for="preset">Folding pattern</label>
+            <select id="preset">
+              <option value="half">Half fold · 2 panels</option><option value="z" selected>Z-fold · 3 panels</option>
+              <option value="letter">Letter / roll fold · 3 panels</option><option value="double">Double parallel · 4 panels</option>
+              <option value="accordion4">Accordion · 4 panels</option><option value="accordion5">Accordion · 5 panels</option>
+              <option value="custom">Custom plate settings</option>
+            </select>
+            <p id="presetInfo" class="muted"></p>
+            <div class="length"><label for="length">Sheet length</label><span><input type="number" id="length" min="150" max="700" step="1" value="420"> mm</span></div>
+            <div class="sectionlabel">PLATE SETTINGS <span>Feed → delivery</span></div>
+            <div id="controls"></div>
+            <p id="warning" role="status" hidden></p>
+            <p class="micro">Quick settings use the original sheet length. Stops are measured from the fold line in this idealised model.</p>
+          </div>
+        </aside>
+      </div>
+
+      <section class="results">
+        <article class="card">
+          <div class="cardhead"><div><span class="eyebrow">01 / UNFOLD IT</span><h2>The crease map</h2></div><span id="panelBadge" class="badge"></span></div>
+          <div class="pad">
+            <div class="edgeLabels"><span>Leading edge</span><span>Trailing edge</span></div>
+            <div id="panels"></div><div id="creaseText" class="micro"></div>
+            <p class="micro">Panel labels follow the original sheet. A / B identify its two faces; these are not booklet page numbers.</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="cardhead"><div><span class="eyebrow">02 / INSPECT IT</span><h2 id="resultName">Folded result</h2></div><span id="sizeBadge" class="badge"></span></div>
+          <div class="pad"><svg id="stack" viewBox="0 0 500 170" role="img" aria-label="Ideal folded panel stack"></svg><p id="stackText" class="micro"></p></div>
+        </article>
+      </section>
+
+      <p class="student-guide">
+        Choose a folding pattern or adjust the plates and stop positions yourself. Play the animation—or step through it—to follow the sheet as it reaches each stop, forms a buckle, enters the roller nip and becomes the final folded packet.
+      </p>
+
+      <p class="source-note">
+        This experience was simulated using the material from Prof. V. Jansen’s
+        <a href="https://moodle.hdm-stuttgart.de/course/section.php?id=32083" target="_blank" rel="noopener">181320 Post Press Technologies · Chapter 3: Folding Principles</a>.
+        A comprehensive bibliography is part of the lecture and is available from Prof. Jansen upon request.
+      </p>
+
+      <footer class="site-footer"><strong>PRINTING LAB / FOLDING</strong><span>Explore slowly. See what changes.</span><span>Printing made visible by Damla I. Dogdu of HdM</span></footer>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
