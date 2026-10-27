@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#347db7">
+  <meta name="description" content="Flip the film. Follow the light. Make a test print. An animated screen-printing experiment from PrintLab.">
+  <title>Exposure Lab · PrintLab</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232447ed'/%3E%3Ccircle cx='10' cy='10' r='4' fill='white'/%3E%3Ccircle cx='22' cy='10' r='3' fill='white'/%3E%3Ccircle cx='10' cy='22' r='3' fill='white'/%3E%3Ccircle cx='22' cy='22' r='2' fill='white'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../assets/brand.css">
+  <link rel="stylesheet" href="lab.css">
+  <script src="vendor/svg.min.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-brand" href="../" aria-label="PrintLab home">
+      <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      <span class="brand-name">PRINTLAB</span><span class="brand-slash">/</span><span class="brand-section">Exposure</span>
+    </a>
+    <nav class="site-nav" aria-label="PrintLab sites">
+      <a href="../">Hub</a>
+      <a href="../halftone/">Halftone</a>
+      <a href="../folding/">Folding</a>
+      <a href="./" aria-current="page">Exposure</a>
+    </nav>
+  </header>
+  <main>
+    <section class="intro">
+      <div><span class="eyebrow">SCREEN PRINTING</span><h1>Which way will it <em>print?</em></h1><p>Flip the film. Follow the light. Find out on paper.</p></div>
+      <div class="chapter" aria-label="Lab 03"><span>03</span><small>EXPOSURE<br>LAB</small></div>
+    </section>
+    <div class="workspace">
+      <section class="studio" aria-label="Animated screen-printing simulation">
+        <div class="studio-head"><div><span class="eyebrow" id="location">EXPOSURE UNIT</span><h2 id="scene-title">A small decision, a different print.</h2></div><span class="status" id="status">Ready to try</span></div>
+        <div class="viewbar"><div class="segmented" aria-label="Simulation view"><button type="button" data-view="unit" aria-pressed="true">Process view</button><button type="button" data-view="face" aria-pressed="false">Screen face</button></div><button class="text-button" id="layers" type="button" aria-pressed="true">Separate layers <span aria-hidden="true">↕</span></button></div>
+        <div class="scene" id="scene">
+          <svg id="process" viewBox="0 0 900 600" role="img" aria-labelledby="process-title process-desc">
+            <title id="process-title">Screen-printing exposure unit, shown in layers</title><desc id="process-desc">A coated screen above a film positive, glass and UV light source. The controls change which side of the film touches the emulsion.</desc>
+            <defs>
+              <pattern id="mesh" width="5" height="5" patternUnits="userSpaceOnUse"><path d="M0 0H5M0 0V5" stroke="#687c8c" stroke-width=".45" opacity=".38" fill="none"/></pattern>
+              <pattern id="ground" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#cedde9"/></pattern>
+              <linearGradient id="metal" x2="0" y2="1"><stop stop-color="#edf3f7"/><stop offset="1" stop-color="#a4b6c5"/></linearGradient>
+              <linearGradient id="glass" x2="1" y2="1"><stop stop-color="#ecf8ff" stop-opacity=".85"/><stop offset="1" stop-color="#c9e5f4" stop-opacity=".5"/></linearGradient>
+              <linearGradient id="light" x2="0" y2="1"><stop stop-color="#b5a2ee" stop-opacity=".45"/><stop offset="1" stop-color="#b5a2ee" stop-opacity="0"/></linearGradient>
+              <filter id="blur"><feGaussianBlur stdDeviation="1.8"/></filter>
+              <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="9" stdDeviation="9" flood-color="#20384f" flood-opacity=".13"/></filter>
+              <symbol id="artwork" viewBox="0 0 500 320">
+                <path d="M74 153V87L98 105Q122 96 145 105L169 87V153Q169 191 122 192Q74 191 74 153Z" fill="none" stroke="currentColor" stroke-width="9" stroke-linejoin="round"/>
+                <path d="M90 143L101 148L90 153M140 146H151M115 163L122 169L129 163M122 169V176M121 192Q127 215 155 207Q181 196 177 177" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+                <text x="202" y="160" font-family="system-ui,sans-serif" font-size="57" font-weight="800" letter-spacing="-3" fill="currentColor">PRINT</text>
+                <path d="M207 193H416M392 177L416 193L392 209" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M208 232H252M262 232H283M295 232H305M317 232H322" fill="none" stroke="currentColor" stroke-width="3"/>
+              </symbol>
+              <mask id="stencil-mask"><rect width="500" height="320" fill="white"/><g id="stencil-hole" color="black"><use href="#artwork" width="500" height="320"/></g></mask>
+              <mask id="wash-mask"><rect width="500" height="320" fill="white"/><g id="wash-hole" color="black" opacity="0"><use href="#artwork" width="500" height="320"/></g></mask>
+              <clipPath id="print-clip"><rect id="print-reveal" width="500" height="0"/></clipPath>
+              <clipPath id="wash-clip"><rect x="0" y="0" width="500" height="320"/></clipPath>
+            </defs>
+            <rect x="0" y="0" width="900" height="600" fill="url(#ground)" opacity=".48"/>
+            <g id="unit-scene">
+              <ellipse cx="450" cy="548" rx="335" ry="31" fill="#20384f" opacity=".05"/>
+              <g id="machine">
+                <path d="M128 438L628 543L788 399V445L628 589L128 484Z" fill="#b4c3d0" stroke="#7e96aa" stroke-width="1.5"/>
+                <path d="M128 438L628 543V589L128 484Z" fill="#dbe5ed"/>
+                <path d="M288 294L788 399L628 543L128 438Z" fill="#7d95aa" stroke="#698297" stroke-width="2"/>
+                <g transform="matrix(1 .21 -.5 .45 288 294)">
+                  <rect x="13" y="13" width="474" height="294" rx="12" fill="#e7e8f6" stroke="#d2dbe4" stroke-width="3"/>
+                  <g id="bulbs" stroke="#b6a6dd" stroke-width="12" stroke-linecap="round"><path d="M45 48H455M45 103H455M45 158H455M45 213H455M45 268H455"/></g>
+                  <rect id="bulb-glow" x="25" y="25" width="450" height="270" rx="10" fill="#ab8de0" opacity="0"/>
+                  <rect x="13" y="13" width="474" height="294" rx="12" fill="url(#glass)" stroke="#e8f7ff" stroke-width="3"/>
+                </g>
+                <text x="172" y="487" transform="rotate(12 172 487)" fill="#637e96" font-size="12" letter-spacing="2">PRINTLAB / EXPOSURE UNIT</text>
+                <circle id="power-light" cx="586" cy="555" r="5" fill="#a1b2c1"/>
+              </g>
+              <g id="uv-rays" opacity="0" stroke="#a986da" stroke-width="3" stroke-dasharray="6 10"><path d="M260 391L260 272M365 413L365 294M470 435L470 316M575 457L575 338M680 424L680 305"/></g>
+              <g id="film-layer" transform="translate(0 -83)"><g transform="matrix(1 .21 -.5 .45 288 294)"><path d="M21 301H479V314H21Z" fill="#c9e1f1" stroke="#93bad5" stroke-width="1"/><rect x="21" y="19" width="458" height="282" rx="4" fill="#f2f9ff" fill-opacity=".75" stroke="#93bad5" stroke-width="2"/><path d="M21 19H74V38H21Z" fill="#d9edfa"/><g id="film-image" color="#233542"><use href="#artwork" width="500" height="320"/></g><path id="film-ink-edge" d="M205 301H305" stroke="#233542" stroke-width="4"/><g class="film-face-tab"><rect id="film-face-tab" x="302" y="255" width="159" height="33" rx="7" fill="#f5e6c8"/><text id="film-top-label" x="381" y="277" text-anchor="middle" font-size="15" font-weight="650" fill="#806944">INK FACE ↑</text></g><text x="36" y="287" font-family="monospace" font-size="12" fill="#6b8da7">FILM POSITIVE</text></g></g>
+              <g id="screen-layer" transform="translate(0 -161)"><g transform="matrix(1 .21 -.5 .45 288 294)"><path d="M0 0H500V320H0Z" fill="#d2dce5" stroke="#728ba0" stroke-width="3"/><rect x="20" y="20" width="460" height="280" fill="url(#mesh)"/><rect id="unit-emulsion" x="20" y="20" width="460" height="280" fill="#88afcd" opacity=".48"/><rect id="hardened-emulsion" x="20" y="20" width="460" height="280" fill="#527cab" opacity="0"/></g><g id="exposure-rim"></g><g id="frame-label" font-size="15" fill="#607e96"><path d="M809 397V347M803 355L809 347L815 355" fill="none" stroke="#86a6bd" stroke-width="1.5"/><text x="822" y="378">Frame</text></g></g>
+              <g id="layer-labels" fill="#627e96" font-size="15"><path id="screen-leader" d="M62 141H170L268 139" fill="none" stroke="#a7bed0"/><text x="36" y="129">Mesh ready for exposure</text><path id="film-leader" d="M46 236H114L114 325L166 335" fill="none" stroke="#a7bed0"/><circle cx="166" cy="335" r="3" fill="#7b9db8"/><text x="36" y="222">Film positive</text></g>
+            </g>
+            <g id="top-unit-scene" opacity="0" visibility="hidden"></g>
+            <g id="wash-scene" opacity="0" visibility="hidden">
+              <path d="M125 515H778L735 563H163Z" fill="#d5e3ed"/><path d="M163 563H735V579H163Z" fill="#b7cbdc"/>
+              <g id="wash-screen" transform="matrix(.92 .11 0 1 210 87.5)"><g id="wash-rear-frame"></g><path d="M-16 -16H516V336H-16Z M0 0V320H500V0Z" fill="url(#metal)" fill-rule="evenodd" stroke="#90a8bb" stroke-width="1.5"/><rect width="500" height="320" fill="#f5f9fc"/><rect width="500" height="320" fill="url(#mesh)"/><rect width="500" height="320" fill="#79a6c9" mask="url(#wash-mask)"/><g id="wash-front-frame"></g></g>
+              <g id="wash-tool" aria-label="Pressure-washer nozzle on the visible face of the screen"></g>
+              <g fill="#6e8ca4" font-size="15"><text id="wash-side-label" x="450" y="40" text-anchor="middle">Wetting · squeegee side</text><text id="wash-profile-label" x="450" y="67" text-anchor="middle">Frame toward you · mesh recessed inside it</text><text id="wash-action-label" x="450" y="549" text-anchor="middle">Wet both sides before developing the stencil.</text></g>
+            </g>
+            <g id="print-scene" opacity="0" visibility="hidden">
+              <ellipse cx="452" cy="534" rx="321" ry="32" fill="#20384f" opacity=".05"/>
+              <g transform="matrix(1 .15 -.35 .58 250 230)">
+                <rect x="-25" y="-25" width="550" height="370" rx="4" fill="#dce6ef"/>
+                <rect x="-10" y="-10" width="520" height="340" rx="2" fill="#fff" stroke="#d4dfe9" stroke-width="2"/>
+                <g clip-path="url(#print-clip)"><g id="paper-image" color="#347db7"><use href="#artwork" width="500" height="320"/></g></g>
+              </g>
+              <g id="printing-screen"><g transform="matrix(1 .15 -.35 .58 250 230)"><rect x="-17" y="-17" width="534" height="354" rx="6" fill="url(#metal)" stroke="#859eb1" stroke-width="3"/><rect width="500" height="320" fill="#edf6fb"/><rect width="500" height="320" fill="url(#mesh)"/><rect width="500" height="320" fill="#80a8c6" mask="url(#stencil-mask)"/><g id="squeegee" transform="translate(0 0)"><rect x="-3" y="-4" width="506" height="14" rx="3" fill="#425d72"/><rect x="20" y="-36" width="460" height="33" rx="8" fill="#c1a7a0"/><rect x="25" y="-32" width="450" height="9" rx="4" fill="#d7c1bb"/></g></g></g>
+              <text id="print-stage-label" x="450" y="549" fill="#627e96" text-anchor="middle" font-size="15">The squeegee pushes ink through the openings.</text>
+            </g>
+            <text id="scene-footnote" x="30" y="575" font-size="11" letter-spacing="1" fill="#8ca2b5">SCHEMATIC VIEW · LAYERS ENLARGED FOR CLARITY</text>
+          </svg>
+        <div class="wash-inspection" id="wash-inspection" hidden><div class="segmented" aria-label="Washed screen inspection"><button type="button" data-wash-side="squeegee" aria-pressed="false">Squeegee side</button><button type="button" data-wash-side="substrate" aria-pressed="true">Flat substrate side</button></div></div>
+          <div id="face-view" hidden>
+            <div class="face-controls segmented" aria-label="Which side of the screen to view"><button type="button" data-side="squeegee" aria-pressed="true">Squeegee side</button><button type="button" data-side="substrate" aria-pressed="false">Flat substrate side</button></div>
+            <svg viewBox="0 0 600 420" role="img" aria-label="Screen face viewed from the selected side"><defs><mask id="face-mask"><rect width="500" height="320" fill="white"/><g id="face-hole" color="black"><use href="#artwork" width="500" height="320"/></g></mask></defs><g transform="translate(50 50)"><rect x="-15" y="-15" width="530" height="350" rx="8" fill="url(#metal)" stroke="#99adbc" stroke-width="2"/><rect width="500" height="320" fill="#f6fafc"/><rect width="500" height="320" fill="url(#mesh)"/><rect id="face-emulsion" width="500" height="320" fill="#8bafcb" mask="url(#face-mask)"/><g id="face-film" color="#243c54"><use href="#artwork" width="500" height="320"/></g></g></svg>
+            <p id="face-caption">Looking down from the squeegee side, toward the printing surface.</p>
+          </div>
+        </div>
+        <div class="exposure-key" id="exposure-key" hidden><span>UV exposure</span><div class="exposure-meter" role="progressbar" aria-label="Illustrative exposure progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="exposure-progress"></span></div></div>
+
+        <div class="story" aria-live="polite"><span id="story-number">01</span><div><h3 id="story-title">Set up your film.</h3><p id="story-text">Choose a film setup, then follow it through exposure, washout and printing.</p></div></div>
+        <div class="playback"><button class="primary" id="run" type="button"><span id="play-icon" aria-hidden="true">▶</span> <span id="run-label">Run trial</span></button><button id="restart" type="button" aria-label="Restart animation">↺ <span>Restart</span></button><div class="speed-control"><label for="speed">Speed</label><select id="speed"><option value="1">1×</option><option value="2">2×</option><option value="0.5">0.5×</option></select></div></div>
+        <div class="timeline"><input id="timeline" type="range" min="0" max="1000" value="0" aria-label="Scrub through the printing process"><span id="progress-label">Ready</span></div>
+        <div class="steps" aria-label="Process stages"><button type="button" data-step="0" class="active"><b>01</b> Place film</button><button type="button" data-step="1"><b>02</b> Expose</button><button type="button" data-step="2"><b>03</b> Wash out</button><button type="button" data-step="3"><b>04</b> Test print</button></div>
+      </section>
+      <aside class="controls" aria-label="Trial settings">
+        <fieldset class="machine-choice"><legend>Exposure machine</legend><select id="machine-type" aria-label="Exposure machine"><option value="below">Light from below</option><option value="above">Light from above · vacuum bed below</option></select></fieldset>
+        <div class="control-heading"><h2>Your film</h2><span class="small-tag">CHANGE & TRY</span></div>
+        <fieldset class="ink-face-preview"><legend>Which face touches the mesh?</legend>
+          <div class="film-surfaces">
+            <button type="button" class="film-surface is-top" id="ink-surface" aria-label="Ink face" data-contact="ink" aria-pressed="true"><span class="surface-name"><i class="ink-key" aria-hidden="true"></i>Ink face</span><svg viewBox="0 0 500 320" role="img" aria-label="Printed ink on the ink face of the film"><g id="ink-face-art" color="#243c54"><use href="#artwork" width="500" height="320"/></g></svg><span class="surface-detail">Ink on this surface</span><strong id="ink-surface-direction">↑ Touching mesh</strong></button>
+            <button type="button" class="film-surface" id="plastic-surface" aria-label="Clear plastic back" data-contact="plastic" aria-pressed="false"><span class="surface-name"><i class="plastic-key" aria-hidden="true"></i>Clear back</span><svg viewBox="0 0 500 320" role="img" aria-label="Artwork seen through the clear plastic back; no ink is on this surface"><g id="plastic-face-art" color="#6c879c" transform="translate(500 0) scale(-1 1)"><use href="#artwork" width="500" height="320"/></g></svg><span class="surface-detail">No ink on this surface</span><strong id="plastic-surface-direction">↓ Toward glass</strong></button>
+          </div>
+        </fieldset>
+        <fieldset><legend>Artwork reading sequence · ink face</legend><div class="choice"><button type="button" data-art="normal" aria-pressed="true">Right-reading</button><button type="button" data-art="mirrored" aria-pressed="false">Mirrored</button></div></fieldset>
+        <details class="contact-detail"><summary>See the contact up close <span aria-hidden="true">+</span></summary><svg id="contact-svg" viewBox="0 0 280 180" role="img" aria-label="Magnified side view of film contact"></svg><label class="detail-loss-option"><input type="checkbox" id="show-edge-loss" disabled><span>Show possible detail loss</span></label><p id="edge-loss-note">Available with plastic-to-emulsion contact. An illustration, not a measured prediction.</p></details>
+      </aside>
+    </div>
+    <section class="outcome" id="outcome" hidden aria-labelledby="outcome-title"><div class="result-heading"><span class="eyebrow">YOUR TEST PRINT</span><h2 id="outcome-title"></h2><p id="outcome-description"></p></div><div class="result-checks"><div><span>Reading sequence</span><strong id="direction-result"></strong></div><div><span>Film contact</span><strong id="contact-result"></strong></div></div><button type="button" id="compare-next">Try the flipped film <span aria-hidden="true">→</span></button></section>
+    <section class="trials" aria-labelledby="trials-title"><div class="section-heading"><div><span class="eyebrow">A LITTLE EXPERIMENT</span><h2 id="trials-title">Keep your trials side by side.</h2></div><button class="text-button" id="clear-trials" type="button" hidden>Clear trials</button></div><div id="trial-list" class="trial-list"><div class="empty-trials"><span aria-hidden="true">↗</span><p>Run your first trial. Its print will appear here.<small>Then change the film and see what happens.</small></p></div></div></section>
+    <div class="watch-notes"><article><span>01</span><div><h3>Contact matters.</h3><p>The film’s ink face should touch the dried emulsion on the screen’s flat substrate side.</p></div></article><article><span>02</span><div><h3>Reading sequence.</h3><p>The intended print is right-reading. From the squeegee side, the stencil follows the same reading sequence; from the substrate side, it looks mirrored.</p></div></article><article><span>03</span><div><h3>Readable isn’t the whole story.</h3><p>Two reversals can give a readable print while leaving the plastic between the image and emulsion.</p></div></article></div>
+    <details class="model-note"><summary>About this model & sources</summary><p>This trial models direct printing onto paper or fabric. Choose a UV source above or below; the film and flat substrate side face the light in both setups. Vacuum-frame lids and covers are omitted in this simplified view. Film opacity, emulsion, drying and exposure are assumed suitable. The animation shows the process, not calibrated exposure times or measured print quality. With poor film contact, angled light can harden emulsion underneath image edges; fine detail may narrow or be lost. The optional “Show possible detail loss” effect illustrates this risk. It is off by default and does not predict the amount of loss in a real setup. Blue shading represents emulsion hardening; it is a teaching cue, not a predicted colour change.</p><p>Both sides are wetted before washout. This sequence develops the image from the flat substrate side, then turns the washed screen so both sides can be inspected. The dark artwork blocks UV; the protected emulsion stays washable until development.</p><p>Process references: <a href="https://www.ulano.com/exposure" target="_blank" rel="noopener">Ulano · Exposure</a> · <a href="https://printwiki.org/Screen_Printing" target="_blank" rel="noopener">PrintWiki</a> · <a href="https://www.youtube.com/watch?v=dv-66W0Cui0" target="_blank" rel="noopener">Squeegee &amp; Ink</a>.</p></details>
+    <footer class="site-footer"><strong>PRINTLAB / EXPOSURE</strong><span>Explore slowly. See what changes.</span><span>Printing made visible by <a href="https://damlairmak.com/">Damla I. Doğdu</a> of HdM</span></footer>
+  </main>
+</body>
+</html>
