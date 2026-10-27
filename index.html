@@ -6,26 +6,27 @@
   <meta name="theme-color" content="#f3f7fb">
   <meta name="description" content="Interactive print-production labs that make technical processes visible.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232447ed'/%3E%3Ccircle cx='10' cy='10' r='4' fill='white'/%3E%3Ccircle cx='22' cy='10' r='3' fill='white'/%3E%3Ccircle cx='10' cy='22' r='3' fill='white'/%3E%3Ccircle cx='22' cy='22' r='2' fill='white'/%3E%3C/svg%3E">
-  <title>Printing Lab · Interactive printing tools</title>
+  <title>PrintLab · Interactive printing tools</title>
   <link rel="stylesheet" href="../assets/brand.css">
   <link rel="stylesheet" href="hub.css">
 </head>
 <body>
   <header class="site-header">
-    <a class="site-brand" href="./" aria-label="Printing Lab home">
+    <a class="site-brand" href="./" aria-label="PrintLab home">
       <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
-      <span class="brand-name">PRINTING LAB</span>
+      <span class="brand-name">PRINTLAB</span>
     </a>
-    <nav class="site-nav" aria-label="Printing Lab sites">
+    <nav class="site-nav" aria-label="PrintLab sites">
       <a href="./" aria-current="page">Hub</a>
       <a href="../halftone/">Halftone</a>
       <a href="../folding/">Folding</a>
+      <a href="../exposure/">Exposure</a>
     </nav>
   </header>
   <main>
     <section class="hero brand-enter">
       <div>
-        <div class="brand-eyebrow">PRINTING, MADE VISIBLE</div>
+        <div class="brand-eyebrow">INTERACTIVE PRINTING TOOLS</div>
         <h1>See print work <em>from the inside.</em></h1>
         <p>Explore print-production systems through interactive simulations that make every process easier to see, test and understand.</p>
       </div>
@@ -39,20 +40,38 @@
       <div class="labs">
         <a class="lab-card brand-card" href="../halftone/">
           <div class="card-visual halftone-visual" aria-hidden="true"><i style="--s:8px"></i><i style="--s:12px"></i><i style="--s:18px"></i><i style="--s:23px"></i><i style="--s:24px"></i><i style="--s:18px"></i><i style="--s:12px"></i><i style="--s:8px"></i><i style="--s:11px"></i><i style="--s:16px"></i><i style="--s:22px"></i><i style="--s:27px"></i><i style="--s:27px"></i><i style="--s:22px"></i><i style="--s:16px"></i><i style="--s:11px"></i></div>
-          <div class="brand-eyebrow">01 / PRE-PRESS & PRINT</div><h3>Halftone Lab</h3><p>Explore how DPI, LPI and tone shape clustered printer dots in a fixed print area.</p><span class="card-action">OPEN THE LAB <b>→</b></span>
+          <div class="brand-eyebrow">01 / PRE-PRESS & PRINT</div><h3>Halftone Lab</h3><p>Explore how DPI, LPI and tone shape clustered printer dots in a fixed print area.</p><span class="card-action">GO TO THE LAB <b>→</b></span>
         </a>
         <a class="lab-card brand-card" href="../folding/">
           <div class="card-visual">
             <img class="folding-preview" src="../assets/folding-preview.jpg" alt="Side view of the animated buckle-folding machine">
           </div>
-          <div class="brand-eyebrow">02 / POST-PRESS</div><h3>Folding Lab</h3><p>Follow a sheet through buckle plates, stops and rollers to see a fold form step by step.</p><span class="card-action">OPEN THE LAB <b>→</b></span>
+          <div class="brand-eyebrow">02 / POST-PRESS</div><h3>Folding Lab</h3><p>Follow a sheet through buckle plates, stops and rollers to see a fold form step by step.</p><span class="card-action">GO TO THE LAB <b>→</b></span>
+        </a>
+
+        <a class="lab-card brand-card" href="../exposure/">
+          <div class="card-visual exposure-visual" aria-hidden="true">
+            <svg viewBox="0 0 360 150" focusable="false">
+              <g class="preview-light" fill="none" stroke="#b5a5c4" stroke-width="2" stroke-dasharray="4 6">
+                <path d="M98 130V91M152 130V102M206 130V112M260 130V101"/>
+              </g>
+              <path d="M66 108L255 141L305 110L116 77Z" fill="#e3eaf4" stroke="#c1d3e2"/>
+              <path d="M66 79L255 112L305 81L116 48Z" fill="#eff7fd" fill-opacity=".85" stroke="#93bad5"/>
+              <path d="M66 50L255 83L305 52L116 19Z M88 49L253 77L283 54L119 26Z" fill="#c9d8e4" fill-rule="evenodd" stroke="#7f99ad"/>
+              <path d="M88 49L253 77L283 54L119 26Z" fill="#88afcd" fill-opacity=".62"/>
+              <g transform="matrix(1 .17 -.7 .5 125 48)" fill="#347db7">
+                <text x="0" y="40" font-family="system-ui,sans-serif" font-size="25" font-weight="800">PRINT <b>→</b></text>
+              </g>
+            </svg>
+          </div>
+          <div class="brand-eyebrow">03 / SCREEN PRINTING</div><h3>Exposure Lab</h3><p>Choose an exposure machine, place the film, then follow exposure, washout and the final print.</p><span class="card-action">GO TO THE LAB <b>→</b></span>
         </a>
       </div>
     </section>
-    <section class="hub-note" aria-label="About Printing Lab">
-      <p>Printing Lab is designed to grow with new subjects. Each lab focuses on one production process and gives students a clear, hands-on way to explore how it works.</p>
+    <section class="hub-note" aria-label="About PrintLab">
+      <p>PrintLab is designed to grow with new subjects. Each lab focuses on one production process and gives students a clear, hands-on way to explore how it works.</p>
     </section>
-    <footer class="site-footer"><strong>PRINTING LAB</strong><span>Interactive print-production learning.</span><span>Printing made visible by <a href="https://damlairmak.com/">Damla I. Doğdu</a> of HdM</span></footer>
+    <footer class="site-footer"><strong>PRINTLAB</strong><span>Interactive print-production learning.</span><span>Printing made visible by <a href="https://damlairmak.com/">Damla I. Doğdu</a> of HdM</span></footer>
   </main>
 </body>
 </html>
