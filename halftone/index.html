@@ -214,10 +214,13 @@
       <section class="method-notes" aria-labelledby="method-title">
         <h2 id="method-title">How the dots grow</h2>
         <p>
-          This is an educational model of clustered-dot screening: printer positions switch on in a fixed order, building a cluster as ink coverage increases. Here, positions are ordered by distance from each cell’s centre. This illustrates the principle discussed by Bouman; it does not reproduce his example 8 × 8 matrix.
+          Printer positions switch on in a fixed order as ink coverage increases. With 8 × 8 positions per cell, the order matches Bouman’s clustered-dot matrix on slide 7, including all 64 ranks. Try 480 DPI and 60 LPI. The dot grows through diamond-shaped layers in a clockwise sequence.
+        </p>
+        <p>
+          Other cell sizes and fractional ratios use our geometric extension of this order. At exactly 2 × 2 positions per cell, the model instead follows the separate ordered-dither example on slide 5: bottom right, top left, top right, then bottom left.
         </p>
         <p class="source-note">
-          Reference: C. A. Bouman (2019), <a href="https://engineering.purdue.edu/~bouman/ece637/previous/ece637S2019/notes/pdf/Halftoning.pdf#page=5">Digital Halftoning</a>, Purdue University, slides 5–9. See slide 7 for the clustered-dot matrix.
+          Reference: C. A. Bouman (2019), <a href="https://engineering.purdue.edu/~bouman/ece637/previous/ece637S2019/notes/pdf/Halftoning.pdf#page=7">Digital Halftoning</a>, Purdue University, slides 5–9. The 8 × 8 order is reproduced; the extension to other sizes is part of this simulation.
         </p>
         <details id="fractional-notes">
           <summary>Why can fractional settings look uneven?</summary>

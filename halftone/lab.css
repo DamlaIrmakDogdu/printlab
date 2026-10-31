@@ -467,6 +467,10 @@ input[type=checkbox] {
   font-size: 14px;
 }
 
+.method-notes > p + p {
+  margin-top: 12px;
+}
+
 .method-notes .source-note {
   margin-top: 14px;
   font-size: 13px;

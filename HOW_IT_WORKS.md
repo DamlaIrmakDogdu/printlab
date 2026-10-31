@@ -1,75 +1,82 @@
 # HOW THE LABS WORK
 
-Here is a rundown of how all the labs work in case if you're curious.
+A technical overview of the rendering, calculations, and animations behind the educational simulations in PrintLab.
 
-## 1. Halftone Lab: rendering method
+## 1. Halftone Lab
 
-The pattern is drawn with the HTML Canvas 2D API.
+### Halftone calculation and rendering
 
-1. JavaScript converts DPI and LPI into printer positions and halftone cells inside the fixed area.
-2. Printer positions are assigned to their nearest screen cell.
-3. Positions inside each cell are sorted from the center outward.
-4. Ink coverage decides how many positions are filled.
-5. Filling positions from the center outward creates a clustered amplitude-modulated halftone dot.
-6. Optional overlays draw fine printer-dot boundaries and blue screen-cell boundaries.
+The halftone pattern is drawn using the **HTML Canvas 2D API**. The simulation represents a fixed physical print area rather than treating screen pixels as printer dots.
 
-Geometry is cached by DPI/LPI combination because changing only ink coverage does not require the cells to be calculated again. Drawing is scheduled with `requestAnimationFrame()` so rapid slider movement stays smooth.
+1. JavaScript converts DPI (printer addressability) and LPI (screen frequency) into printer positions and halftone cells within that area.
+2. Each printer position is assigned to its nearest screen cell.
+3. The positions in each cell are ordered from the center outward.
+4. Ink coverage determines how many of those discrete positions are filled.
+5. Filling positions in that order produces a clustered, amplitude-modulated (AM) halftone pattern.
+6. Optional overlays display the individual printer-position boundaries and the screen-cell boundaries.
 
-The Explore panel and both Compare panels use the same state and rendering functions. This avoids three separate implementations producing inconsistent results.
+The number of available printer positions per screen cell is approximately **(DPI / LPI)²**. This is an average area ratio, not a guarantee that every cell contains the same integer number of positions. Coverage is quantized into discrete filled positions, so small coverage adjustments may leave the drawing unchanged until the next position is added or removed.
 
-## 2. Folding Lab: fold calculation
+### Technical reference: clustered-dot screening
 
-The folding model treats the original sheet as material coordinates running from the leading edge to the trailing edge. Each layer records:
+The halftone model follows the general principle of **ordered, clustered-dot screening**: addressable output positions are activated in a defined spatial order so that neighboring printed positions form a growing dot as tone coverage increases. This concept is described in C. A. Bouman’s *Digital Halftoning* lecture notes (Purdue University, 2019), particularly the sections on ordered dithering, clustered-dot screens, and the trade-off between tone levels and spatial resolution (pp. 5–10).
 
-- the original material interval it contains;
-- its position in the folded packet;
-- its direction;
-- which face, A or B, points upward.
+**Reference:** Bouman, C. A. (2019). *Digital Halftoning*. ECE 637: Digital Image Processing, Purdue University. [Lecture notes (PDF)](https://engineering.purdue.edu/~bouman/ece637/previous/ece637S2019/notes/pdf/Halftoning.pdf).
 
-An active buckle plate folds the entering packet at its stop distance. The calculation splits any layer crossed by that fold position, reflects the folded part around the crease, reverses the appropriate layer order, and flips the exposed face. This produces the final crease positions, packet width, layer order, panel labels, and face directions.
+This reference supports the **underlying screening principle**, not a claim that PrintLab reproduces Bouman’s particular threshold matrices or implementation. PrintLab calculates its own DPI/LPI-dependent cell geometry and center-outward fill order; fractional-grid behavior and browser Canvas rendering are implementation-specific and are not established by the lecture notes.
 
-Presets are configuration data rather than separately drawn animations. A preset specifies which plates are active and each stop distance as a fraction of sheet length. The same calculation engine therefore handles half folds, Z-folds, letter folds, double-parallel folds, accordion folds, and custom settings.
+### Canvas pixels and fractional values
 
-## 3. Folding Lab: motion geometry
+**Printer DPI, screen LPI, CSS pixels, and Canvas bitmap pixels are different units.** The browser displays the computed pattern by mapping its coordinates into a raster bitmap and then presenting that bitmap at a CSS-defined size. The Canvas backing-store resolution, device-pixel ratio, browser zoom, and any CSS scaling can affect the apparent sharpness of edges and fine grid lines; they do not change the underlying DPI/LPI calculations.
 
-The machine is drawn as SVG because SVG is well suited to exact paths, circles, labels, and scalable technical graphics.
+When DPI/LPI is fractional, halftone-cell boundaries generally do not align evenly with the printer-position grid. Neighboring cells can therefore contain different arrangements of addressable positions, and clustered dots may look slightly asymmetric or vary in shape. This is a consequence of representing continuous cell geometry with a discrete grid, not necessarily a calculation error. Additional visual differences can arise when Canvas rasterizes fractional coordinates and antialiases or scales the resulting image.
 
-Paper movement is based on physical travel distance along a route. The route contains:
+Geometry is cached by DPI/LPI combination because changing only ink coverage does not require recalculating the cells. Redrawing is scheduled with `requestAnimationFrame()` to keep rapid slider changes responsive. The Explore panel and both Compare panels share the same state and rendering functions to avoid inconsistent calculations.
 
-- straight line segments;
-- circular arcs around rollers;
-- tangent transitions between straight paths and roller surfaces.
+## 2. Folding Lab
 
-When a straight connection would cut through a roller, the code calculates two possible tangent–arc–tangent routes and selects the shorter exterior route. This keeps the paper outside the cylinder while allowing it to follow the cylinder's curvature.
+### Fold calculation
 
-Material sample points are tied to their positions on the original sheet. They travel through the route without being replaced by a shorter placeholder shape. That is the length-preservation principle that prevents the folded packet from shrinking or becoming corrupted.
+The model tracks the original sheet using material coordinates from its leading edge to its trailing edge. Each folded layer records its original material interval, position in the packet, direction, and which face (A or B) points upward.
 
-## 4. Folding sequence and timing
+An active buckle plate folds the incoming packet at its stop distance. The calculation splits layers crossed by the fold, reflects the folded portion around the crease, adjusts layer order, and changes the exposed face. The resulting state determines crease positions, packet width, layer order, panel labels, and face directions.
 
-The animation is organized as a timeline of meaningful phases:
+Fold presets are configuration data, not separately authored animations. Each preset specifies active plates and stop distances as fractions of sheet length. The same calculation engine supports half folds, Z-folds, letter folds, double-parallel folds, accordion folds, and custom settings.
 
-1. Feed the sheet.
-2. Enter an active plate, or bypass an inactive one.
-3. Reach and hold at the plate stop.
-4. Continue feeding material to form the buckle.
-5. Let the next roller nip catch the buckle.
-6. Pull both folded legs through while sending the new folded edge onward.
-7. Deliver and inspect the packet.
+### SVG geometry and paper transport
 
-A shared transport distance coordinates the stations. This allows one station to withdraw material while the next station receives the folded edge, rather than making unrelated shapes morph into one another.
+The machine is drawn as **SVG**, which supports scalable paths, circles, labels, and precisely positioned technical components. Paper movement is calculated along a route consisting of straight segments, circular roller arcs, and tangent transitions.
 
-Animation time is advanced with `requestAnimationFrame()`. The timeline slider, step control, playback speed, pause/replay button, and focused camera all read from the same timeline state.
+Where a straight connection would intersect a roller, the route calculation considers tangent–arc–tangent alternatives and selects the shorter exterior route. Material sample points remain associated with their positions on the original sheet as they travel, preserving the represented sheet length rather than replacing the sheet with an arbitrarily shortened shape.
 
-## 5. Validation principles
+### Animation sequence
 
-The simulations are checked at two levels:
+The timeline represents feeding, entry into or bypass of a buckle plate, contact with the plate stop, buckle formation, capture by the next roller nip, passage of the folded layers through the rollers, and final packet delivery.
 
-- **Structural checks:** JavaScript syntax is validated and every local HTML link, stylesheet, script, and image must resolve.
-- **Folding geometry checks:** sampled animation frames verify material-length preservation, expected crease counts, phase continuity, stop contact, packet dimensions, roller exclusion, circular wrapping, and tangent joins.
+A shared transport distance coordinates successive stations so material leaving one station enters the next continuously. `requestAnimationFrame()` advances the animation, while the timeline slider, step control, playback speed, pause/replay control, and focused camera use the same timeline state.
 
-These tests do not claim that the website is a complete engineering simulation of paper mechanics. It is an EDUCATIONAL MODEL designed to make the important production principles visible while remaining understandable and responsive in a browser.
+## 3. Screen Printing Lab
 
-Thank you for your time, I am always open to feedback and criticism.
+### Exposure arrangement and visual states
 
-Sincerely,
+The screen-printing simulation uses a layered technical illustration to distinguish the frame, mesh with dried photoemulsion, film positive, and exposure arrangement. Film orientation and contact are important because the image must be transferred to the intended side of the screen without unwanted reversal or separation. The printed image side of the film is positioned toward the emulsion; the transparent film support faces the exposure glass/light side in the illustrated arrangement.
+
+The exposure stage represents the difference between areas that receive UV light and areas shielded by opaque film artwork. For a conventional **positive-working stencil process using a negative-working photopolymer emulsion**, illuminated emulsion hardens while masked regions remain removable. During washout, the unexposed regions are cleared to form ink-permeable openings. The washing view is represented from the back (squeegee) side of the screen.
+
+The illustrations and transitions communicate **orientation, sequence, and cause and effect**, rather than calculating UV dose, optical transmission, emulsion curing kinetics, water pressure, or actual stencil durability. The exact behavior depends on the emulsion and exposure system used in practice.
+
+## 4. Implementation and validation
+
+The labs use browser-native graphics and animation concepts: Canvas 2D for the raster halftone display, SVG for scalable technical machine drawings, JavaScript for calculation and state changes, and `requestAnimationFrame()` where frame-based updates are needed. **Canvas and SVG are browser technologies, not third-party libraries.** External libraries should only be listed as dependencies if they are actually imported by the corresponding project.
+
+Validation covers two distinct levels:
+
+- **Structural checks:** JavaScript syntax and resolution of local HTML links, stylesheets, scripts, and image assets.
+- **Folding geometry checks:** sampled frames can be checked for represented sheet-length preservation, expected crease counts, phase continuity, stop contact, packet dimensions, roller exclusion, circular wrapping, and tangent joins.
+
+These are **educational models**, not comprehensive engineering simulations. Their purpose is to make selected printing and postpress principles visible and interactive. Visual correctness does not by itself establish quantitative agreement with physical equipment or materials.
+
+Thank you for your time. I am always open to feedback and criticism.
+
+Sincerely,  
 Damla

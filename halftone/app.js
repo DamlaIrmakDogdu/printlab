@@ -37,6 +37,8 @@ const ui = {
   sparse: 'Fewer than 2 printer positions per cell edge: the screen is poorly resolved.'
 };
 const cache = {};
+// Bouman, Digital Halftoning (2019), slide 5; separate from the clustered 8 × 8 example.
+const ordered2 = [[1, 2], [3, 0]];
 
 function controls(id) {
   const host = document.getElementById('controls-' + id);
@@ -72,17 +74,23 @@ function geometry(s) {
       const k = cx + ',' + cy;
       const dx = x + .5 - (cx + .5) * r,
         dy = y + .5 - (cy + .5) * r;
+      // Diamond shells, clockwise from the rightmost position just above the centre,
+      // reproduce all 64 ranks on slide 7. Other sizes use this geometric extension.
+      const d = r === 2 ? ordered2[y % 2][x % 2] :
+        Math.round((Math.abs(dx) + Math.abs(dy)) * 1e9) / 1e9;
+      let angle = Math.atan2(dy, dx);
+      if (angle < 0 && !(dx > 0 && dy > -1)) angle += Math.PI * 2;
       const a = groups.get(k) || [];
       a.push({
         x,
         y,
-        d: dx * dx + dy * dy
+        d,
+        angle
       });
       groups.set(k, a)
     }
   const cells = [...groups.values()];
-  // Distance ranks illustrate clustered-dot screening, not Bouman's specific 8 × 8 matrix (see page reference).
-  cells.forEach(c => c.sort((a, b) => a.d - b.d || a.y - b.y || a.x - b.x));
+  cells.forEach(c => c.sort((a, b) => a.d - b.d || a.angle - b.angle));
   const value = {
     n,
     r,
