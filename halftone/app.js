@@ -33,7 +33,7 @@ const ui = {
   device: 'Printer dots',
   edge: 'printer positions / cell edge',
   levels: 'estimated theoretical tone levels',
-  fractional: 'Fractional ratio: cells may have different numbers of printer positions.',
+  fractional: 'Fractional ratio: grid alignment and rounded fill counts can change dot shapes. See “Why can fractional settings look uneven?” below.',
   sparse: 'Fewer than 2 printer positions per cell edge: the screen is poorly resolved.'
 };
 const cache = {};
@@ -58,8 +58,8 @@ function controls(id) {
 
 function geometry(s) {
   const key = s.dpi + '/' + s.lpi;
-  if (cache[key]) return cache[
-  key]; // Complete edge cells before clipping; otherwise cropped dots would grow too large.
+  if (cache[key]) return cache[key];
+  // Complete edge cells before clipping; otherwise cropped dots would grow too large.
   const n = s.dpi / 10,
     r = s.dpi / s.lpi,
     count = Math.ceil(s.lpi / 10),
@@ -80,8 +80,8 @@ function geometry(s) {
       });
       groups.set(k, a)
     }
-  const cells = [...groups
-.values()]; // Center-first ordering grows AM clusters; ties stay deterministic as coverage changes.
+  const cells = [...groups.values()];
+  // Distance ranks illustrate clustered-dot screening, not Bouman's specific 8 × 8 matrix (see page reference).
   cells.forEach(c => c.sort((a, b) => a.d - b.d || a.y - b.y || a.x - b.x));
   const value = {
     n,
@@ -108,6 +108,7 @@ function paint(id) {
   ctx.fillRect(0, 0, w, w);
   ctx.fillStyle = '#182039';
   for (const cell of cells) {
+    // One rank per position gives implicit thresholds at (rank + 0.5) / cell.length.
     const filled = Math.round(cell.length * s.tone / 100);
     for (let i = 0; i < filled; i++) {
       const p = cell[i];

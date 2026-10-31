@@ -211,6 +211,29 @@
           </div>
         </div>
       </section>
+      <section class="method-notes" aria-labelledby="method-title">
+        <h2 id="method-title">How the dots grow</h2>
+        <p>
+          This is an educational model of clustered-dot screening: printer positions switch on in a fixed order, building a cluster as ink coverage increases. Here, positions are ordered by distance from each cell’s centre. This illustrates the principle discussed by Bouman; it does not reproduce his example 8 × 8 matrix.
+        </p>
+        <p class="source-note">
+          Reference: C. A. Bouman (2019), <a href="https://engineering.purdue.edu/~bouman/ece637/previous/ece637S2019/notes/pdf/Halftoning.pdf#page=5">Digital Halftoning</a>, Purdue University, slides 5–9. See slide 7 for the clustered-dot matrix.
+        </p>
+        <details id="fractional-notes">
+          <summary>Why can fractional settings look uneven?</summary>
+          <div class="note-body">
+            <p>
+              When DPI ÷ LPI is fractional, screen cells do not line up evenly with the fixed printer grid. At 600 DPI and 70 LPI, a cell is about 8.57 printer positions wide, so some cells receive 8 columns and others 9. Their centres also fall differently between printer positions. The model fills a rounded number of positions in each cell, so dot shapes and actual coverage can vary slightly. These variations are calculated, not random. The displayed tone-level count is only an estimate for fractional ratios.
+            </p>
+            <p>
+              Canvas can add a separate display effect: fractional drawing coordinates can produce partially shaded edge pixels. The canvas bitmap is also resized to fit the page, so viewport size, browser zoom and display pixel density can affect its appearance. Grid overlays can add visible texture. These display effects do not change which printer positions the model selects.
+            </p>
+            <p class="source-note">
+              Browser reference: MDN, <a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Drawing_shapes#seeing_blurry_edges">Drawing shapes with canvas — Seeing blurry edges?</a>
+            </p>
+          </div>
+        </details>
+      </section>
       <footer class="site-footer"><strong>PRINTING LAB / HALFTONE</strong><span>A space to experiment, one dot at a time.</span><span>Printing made visible by <a href="https://damlairmak.com/">Damla I. Doğdu</a> of HdM</span></footer>
     </main>
     <script src="app.js"></script>

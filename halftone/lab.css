@@ -450,6 +450,53 @@ input[type=checkbox] {
   padding: 10px 14px
 }
 
+.method-notes {
+  margin-top: 30px;
+  padding: 26px;
+  background: white;
+  border: 1px solid #d8deed;
+  border-radius: 14px;
+  scroll-margin-top: 100px;
+}
+
+.method-notes h2 {
+  margin-bottom: 12px;
+}
+
+.method-notes p {
+  font-size: 14px;
+}
+
+.method-notes .source-note {
+  margin-top: 14px;
+  font-size: 13px;
+}
+
+.method-notes details {
+  margin-top: 20px;
+  border-top: 1px solid #e4ebf2;
+  padding-top: 18px;
+  scroll-margin-top: 100px;
+}
+
+.method-notes summary {
+  cursor: pointer;
+  color: var(--blue);
+  font-size: 15px;
+  font-weight: 650;
+  line-height: 1.5;
+}
+
+.note-body {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.note-body .source-note {
+  margin-top: 0;
+}
+
 [hidden] {
   display: none !important
 }
